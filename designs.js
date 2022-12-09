@@ -16,18 +16,25 @@ function removeGrid() {
 
 // Set background color of element
 function setBackgroundColor(event) {
-    event.target.color = color.nodeValue;
+    
+    // console.log(event);
+    event.currentTarget.style.backgroundColor = color.value;
 }
 
 // When size is submitted by the user, call makeGrid()
 function makeGrid() {
     removeGrid();
-    for (let i = 1; i <= height; i++) {
+    for (let i = 1; i <= parseInt(height.value); i++) {
         const row = document.createElement('tr');
-        for (let j = 1; j <= width; j++) {
+        for (let j = 1; j <= parseInt(width.value); j++) {
             const cell = document.createElement('td');
-            cell.addEventListener('onClick', setBackgroundColor(this));
+            cell.addEventListener('onClick', setBackgroundColor(event));
+            row.appendChild(cell);
         }
+        pixelCanvas.appendChild(row);
     }
 }
-submitButton.addEventListener('click', makeGrid());
+submitButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    makeGrid();
+});
